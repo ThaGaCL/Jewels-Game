@@ -1,4 +1,4 @@
-# Jogo Gráfico - Jewels 🔷
+# Jogo Gráfico - Jewels 💎 
 
 # Descrição:
   
