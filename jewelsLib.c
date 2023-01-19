@@ -147,3 +147,15 @@ void hud_draw()
     al_draw_text(font, al_map_rgb(20, 179, 20), 10, 10, 0, "< T E R M O I L >");
     
 }
+
+void help_draw()
+{
+        al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 10, ALLEGRO_ALIGN_CENTRE, "< T E R M O I L >");
+        al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 30, ALLEGRO_ALIGN_CENTRE, "F1 ou H - menu de ajuda");
+        al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 50, ALLEGRO_ALIGN_CENTRE, "Como jogar:");
+        al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 70, ALLEGRO_ALIGN_CENTRE, "Clique em duas peças para troca-las de lugar");
+        al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 90, ALLEGRO_ALIGN_CENTRE, "Combine 3 ou mais peças do mesmo tipo para eliminá-las");
+        al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 110, ALLEGRO_ALIGN_CENTRE, "Quanto mais peças você eliminar de uma vez, mais pontos você ganha");
+
+
+}

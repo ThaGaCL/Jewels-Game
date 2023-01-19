@@ -53,5 +53,6 @@ void hud_update();
 
 void hud_draw();
 
+void help_draw();
 
 #endif

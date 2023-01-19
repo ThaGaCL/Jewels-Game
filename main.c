@@ -43,6 +43,7 @@ int main(){
     score = 0;
 
     bool done = false;
+    bool help = false;
     bool redraw = true;
     ALLEGRO_EVENT event;
 
@@ -59,6 +60,9 @@ int main(){
 
                 if(key[ALLEGRO_KEY_ESCAPE])
                     done = true;
+
+                if(key[ALLEGRO_KEY_F1]||key[ALLEGRO_KEY_H])
+                    help = true;
 
                 redraw = true;
                 frames++;
@@ -78,8 +82,14 @@ int main(){
         {
             disp_pre_draw();
             al_clear_to_color(al_map_rgb(23,23,23));
-            hud_draw();
-            matrix_draw(matrix);
+            if(help){
+                help_draw();
+                help = false;
+            }
+            else{
+                hud_draw();
+                matrix_draw(matrix);
+            }
             disp_post_draw();
             redraw = false;
         }
