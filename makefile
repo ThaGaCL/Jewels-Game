@@ -2,7 +2,7 @@ PROGS = asteroids
 CC = gcc
 CFLAGS = -Wall -g
 ALLEGRO = -lallegro -lallegro_primitives -lallegro_image -lallegro_font -lallegro_audio -lallegro_acodec
-objects = main.o jewelsLib.o allegroDisplay.o allegroUtil.o allegroKeyboard.o allegroSprites.o allegroAudio.o
+objects = main.o jewelsLib.o allegroDisplay.o allegroUtil.o allegroKeyboard.o allegroSprites.o allegroAudio.o allegroMouse.o
 
 asteroids: $(objects)
 	$(CC) $(CFLAGS) $(objects) $(ALLEGRO) -o $(PROGS)
@@ -21,7 +21,10 @@ allegroKeyboard.o: allegroKeyboard.c allegroKeyboard.h
 
 allegroSprites.o: allegroSprites.c allegroSprites.h
 	$(CC) $(CFLAGS) -c allegroSprites.c
-	
+
+allegroMouse.o: allegroMouse.c allegroMouse.h
+	$(CC) $(CFLAGS) -c allegroMouse.c
+
 allegroAudio.o: allegroAudio.c allegroAudio.h
 	$(CC) $(CFLAGS) -c allegroAudio.c
 	

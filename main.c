@@ -2,6 +2,7 @@
 #include "allegroUtil.h"
 #include "jewelsLib.h"
 #include "allegroSprites.h"
+#include "allegroMouse.h"
 #include "allegroKeyboard.h"
 #include "allegroAudio.h"
 
@@ -19,6 +20,8 @@ int main(){
     MATRIX** matrix = matrix_init(10);
     disp_init();
 
+    mouse_init();
+
     audio_init();
 
     mustInit(al_init_image_addon(), "image");
@@ -35,10 +38,11 @@ int main(){
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_display_event_source(disp));
     al_register_event_source(queue, al_get_timer_event_source(timer));
+    al_register_event_source(queue, al_get_mouse_event_source());
 
     keyboard_init();
 
-
+    int pos_x, pos_y;
     frames = 0;
     score = 0;
 
@@ -71,8 +75,20 @@ int main(){
             case ALLEGRO_EVENT_DISPLAY_CLOSE:
                 done = true;
                 break;
+
+            case ALLEGRO_EVENT_MOUSE_AXES:
+                pos_x = event.mouse.x;
+                pos_y = event.mouse.y;    
+
+                if(mouse_on_jewel(matrix, event, pos_x, pos_y)){
+                    printf("Mouse on jewel");
+                }
+                
+                break;
+    
         }
 
+        al_draw_filled_rectangle(pos_x - 100, pos_y -100, pos_x + 90, pos_y + 90, al_map_rgb(255, 0, 255));
         if(done)
             break;
 
@@ -87,7 +103,7 @@ int main(){
                 help = false;
             }
             else{
-                hud_draw();
+                hud_draw(pos_x, pos_y);
                 matrix_draw(matrix);
             }
             disp_post_draw();
@@ -95,6 +111,7 @@ int main(){
         }
     }
 
+    mouse_deinit();
     sprites_deinit();
     hud_deinit();
     audio_deinit();

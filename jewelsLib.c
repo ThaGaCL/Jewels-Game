@@ -86,8 +86,6 @@ MATRIX** matrix_init(int size)
             m[i][j].y = dy;
             m[i][j].type = rand() % 5;
 
-            printf("i: %d, j: %d", i, j);
-
             while((linear_combination(m, i, j))||(vertical_combination(m, i, j)))
                 m[i][j].type = rand() % 5;
             
@@ -115,7 +113,10 @@ void matrix_draw(MATRIX** matrix)
                 switch (matrix[i][j].type)
                 {
                 case 0:
-                    al_draw_bitmap(sprites.green, matrix[i][j].x, matrix[i][j].y, 0);
+                    if(matrix[i][j].select[0] == 1)
+                        al_draw_tinted_bitmap(sprites.green,al_map_rgb(0, 0, 0),matrix[i][j].x, matrix[i][j].y, 0);
+                    else
+                        al_draw_bitmap(sprites.green, matrix[i][j].x, matrix[i][j].y, 0);
                     break;
                 case 1:
                     al_draw_bitmap(sprites.blue, matrix[i][j].x, matrix[i][j].y, 0);
@@ -137,12 +138,13 @@ void matrix_draw(MATRIX** matrix)
         }
 }
 
-void hud_draw()
+void hud_draw(int x, int y)
 {
 
     al_draw_textf(font, al_map_rgb_f(1, 1, 1), 54, 50, 0, "%06ld", score_display); 
     al_draw_filled_rectangle(DISP_W/2 - 360, 15, DISP_W/2 - 40, 325, al_map_rgb(0, 0, 0));
     al_draw_filled_rectangle(DISP_W/2 - 370, 10, DISP_W/2 - 50, 315, al_map_rgb(219, 218, 222));
+    al_draw_filled_rectangle(x, y, x+30, y+30, al_map_rgb(255, 0, 255));
 
     al_draw_text(font, al_map_rgb(20, 179, 20), 10, 10, 0, "< T E R M O I L >");
     

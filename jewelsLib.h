@@ -51,7 +51,7 @@ void hud_deinit();
 
 void hud_update();
 
-void hud_draw();
+void hud_draw(int x, int y);
 
 void help_draw();
 

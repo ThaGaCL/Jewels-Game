@@ -11,9 +11,13 @@ void disp_init()
     disp = al_create_display(DISP_W, DISP_H);
     mustInit(disp, "display");
 
+    al_set_window_title(disp, "Jewels");
+
+
     buffer = al_create_bitmap(BUFFER_W, BUFFER_H);
     mustInit(buffer, "bitmap buffer");
 }
+
 
 void disp_deinit()
 {
