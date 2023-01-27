@@ -55,4 +55,6 @@ void hud_draw(int x, int y);
 
 void help_draw();
 
+void menu_draw();
+
 #endif

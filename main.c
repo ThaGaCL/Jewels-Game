@@ -46,9 +46,11 @@ int main(){
     frames = 0;
     score = 0;
 
+    bool menu = false;
     bool done = false;
     bool help = false;
     bool redraw = true;
+    bool click = false;
     ALLEGRO_EVENT event;
 
     al_start_timer(timer);
@@ -62,11 +64,13 @@ int main(){
             case ALLEGRO_EVENT_TIMER:
 
 
-                if(key[ALLEGRO_KEY_ESCAPE])
-                    done = true;
+                if(key[ALLEGRO_KEY_ESCAPE]){
+                    menu = !menu;
+                }
 
                 if(key[ALLEGRO_KEY_F1]||key[ALLEGRO_KEY_H])
                     help = true;
+
 
                 redraw = true;
                 frames++;
@@ -79,32 +83,41 @@ int main(){
             case ALLEGRO_EVENT_MOUSE_AXES:
                 pos_x = event.mouse.x;
                 pos_y = event.mouse.y;    
-
-                if(mouse_on_jewel(matrix, event, pos_x, pos_y)){
-                    printf("Mouse on jewel");
-                }
                 
                 break;
+            
+            case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+                pos_x = event.mouse.x;
+                pos_y = event.mouse.y;
+
+                click = true;
     
         }
 
-        al_draw_filled_rectangle(pos_x - 100, pos_y -100, pos_x + 90, pos_y + 90, al_map_rgb(255, 0, 255));
         if(done)
             break;
 
         keyboard_update(&event);
 
+        if((mouse_on_jewel(matrix, pos_x, pos_y))&&(click)){
+            printf("click\n");
+            click = false;
+        }
+
         if(redraw && al_is_event_queue_empty(queue))
         {
-            disp_pre_draw();
             al_clear_to_color(al_map_rgb(23,23,23));
             if(help){
                 help_draw();
                 help = false;
             }
+            else if(menu){
+                menu_draw();
+            }
             else{
                 hud_draw(pos_x, pos_y);
                 matrix_draw(matrix);
+                // al_draw_filled_rectangle(pos_x - 15, pos_y - 15, pos_x + 15, pos_y + 15, al_map_rgb(255, 0, 255));
             }
             disp_post_draw();
             redraw = false;

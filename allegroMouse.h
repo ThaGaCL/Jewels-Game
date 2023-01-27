@@ -6,7 +6,7 @@
 #include "jewelsLib.h"
 
 void mouse_init();
-int mouse_on_jewel(MATRIX** m, ALLEGRO_EVENT event, int x, int y);
+int mouse_on_jewel(MATRIX** m, int x, int y);
 void mouse_deinit();
 
 #endif

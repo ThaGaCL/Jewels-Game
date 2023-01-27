@@ -1,10 +1,10 @@
-PROGS = asteroids
+PROGS = termoil
 CC = gcc
 CFLAGS = -Wall -g
 ALLEGRO = -lallegro -lallegro_primitives -lallegro_image -lallegro_font -lallegro_audio -lallegro_acodec
 objects = main.o jewelsLib.o allegroDisplay.o allegroUtil.o allegroKeyboard.o allegroSprites.o allegroAudio.o allegroMouse.o
 
-asteroids: $(objects)
+termoil: $(objects)
 	$(CC) $(CFLAGS) $(objects) $(ALLEGRO) -o $(PROGS)
 
 main.o: main.c allegroUtil.h jewelsLib.h allegroDisplay.h allegroKeyboard.h allegroSprites.h allegroAudio.h

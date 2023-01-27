@@ -68,7 +68,7 @@ int vertical_combination(MATRIX** m, int i, int j){
 
 MATRIX** matrix_init(int size)
 {
-    int dx = 380;
+    int dx = 20;
     int dy = 0;
     // Create a size x size matrix
     MATRIX** m = malloc(sizeof(MATRIX*) * size);
@@ -91,7 +91,7 @@ MATRIX** matrix_init(int size)
             
             dx -= 30;
         }
-        dx = 380;
+        dx = 25;
         dy += 30;
     }
     return m;
@@ -119,16 +119,28 @@ void matrix_draw(MATRIX** matrix)
                         al_draw_bitmap(sprites.green, matrix[i][j].x, matrix[i][j].y, 0);
                     break;
                 case 1:
-                    al_draw_bitmap(sprites.blue, matrix[i][j].x, matrix[i][j].y, 0);
+                    if(matrix[i][j].select[0] == 1)
+                        al_draw_tinted_bitmap(sprites.blue,al_map_rgb(0, 0, 0),matrix[i][j].x, matrix[i][j].y, 0);
+                    else
+                        al_draw_bitmap(sprites.blue, matrix[i][j].x, matrix[i][j].y, 0);
                     break;
                 case 2:
-                    al_draw_bitmap(sprites.red, matrix[i][j].x, matrix[i][j].y, 0);
+                    if(matrix[i][j].select[0] == 1)
+                        al_draw_tinted_bitmap(sprites.red,al_map_rgb(0, 0, 0),matrix[i][j].x, matrix[i][j].y, 0);
+                    else
+                        al_draw_bitmap(sprites.red, matrix[i][j].x, matrix[i][j].y, 0);
                     break;
                 case 3:
-                    al_draw_bitmap(sprites.yellow, matrix[i][j].x, matrix[i][j].y, 0);
+                    if(matrix[i][j].select[0] == 1)
+                        al_draw_tinted_bitmap(sprites.yellow,al_map_rgb(0, 0, 0),matrix[i][j].x, matrix[i][j].y, 0);
+                    else
+                        al_draw_bitmap(sprites.yellow, matrix[i][j].x, matrix[i][j].y, 0);
                     break;
                 case 4:
-                    al_draw_bitmap(sprites.purple, matrix[i][j].x, matrix[i][j].y, 0);
+                    if(matrix[i][j].select[0] == 1)
+                        al_draw_tinted_bitmap(sprites.purple,al_map_rgb(0, 0, 0),matrix[i][j].x, matrix[i][j].y, 0);
+                    else
+                        al_draw_bitmap(sprites.purple, matrix[i][j].x, matrix[i][j].y, 0);
                     break;
                 
                 default:
@@ -141,12 +153,11 @@ void matrix_draw(MATRIX** matrix)
 void hud_draw(int x, int y)
 {
 
-    al_draw_textf(font, al_map_rgb_f(1, 1, 1), 54, 50, 0, "%06ld", score_display); 
-    al_draw_filled_rectangle(DISP_W/2 - 360, 15, DISP_W/2 - 40, 325, al_map_rgb(0, 0, 0));
-    al_draw_filled_rectangle(DISP_W/2 - 370, 10, DISP_W/2 - 50, 315, al_map_rgb(219, 218, 222));
-    al_draw_filled_rectangle(x, y, x+30, y+30, al_map_rgb(255, 0, 255));
+    al_draw_textf(font, al_map_rgb_f(1, 1, 1), 150, 50, 0, "%06ld", score_display); 
+    al_draw_filled_rectangle(DISP_W/2 - 30, 15, DISP_W/2 + 350, 365, al_map_rgb(0, 0, 0));
+    al_draw_filled_rectangle(DISP_W/2 - 40, 10, DISP_W/2 + 340, 355, al_map_rgb(219, 218, 222));
 
-    al_draw_text(font, al_map_rgb(20, 179, 20), 10, 10, 0, "< T E R M O I L >");
+    al_draw_text(font, al_map_rgb(20, 179, 20), 100, 10, 0, "< T E R M O I L >");
     
 }
 
@@ -160,4 +171,13 @@ void help_draw()
         al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 110, ALLEGRO_ALIGN_CENTRE, "Quanto mais peças você eliminar de uma vez, mais pontos você ganha");
 
 
+}
+
+void menu_draw()
+{
+    al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 50, ALLEGRO_ALIGN_CENTRE, "< T E R M O I L >");
+    al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 110, ALLEGRO_ALIGN_CENTRE, "Jogar");
+    al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 130, ALLEGRO_ALIGN_CENTRE, "Ajuda");
+    al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 150, ALLEGRO_ALIGN_CENTRE, "Ranking");
+    al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 170, ALLEGRO_ALIGN_CENTRE, "Sair");
 }
