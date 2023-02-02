@@ -45,7 +45,7 @@ void hud_update()
 }
 
 int linear_combination(MATRIX** m, int i, int j){
-    
+
     if((m[i][j].type == m[i][j+1].type)||(m[i][j].type == m[i][j-1].type)){
         return 1;
     }
@@ -62,13 +62,14 @@ int vertical_combination(MATRIX** m, int i, int j){
     if(m[i][j].type == m[i-1][j].type){
         return 1;
     }
+
     return 0;
 
 }
 
 MATRIX** matrix_init(int size)
 {
-    int dx = 20;
+    int dx = 30;
     int dy = 0;
     // Create a size x size matrix
     MATRIX** m = malloc(sizeof(MATRIX*) * size);
@@ -89,10 +90,10 @@ MATRIX** matrix_init(int size)
             while((linear_combination(m, i, j))||(vertical_combination(m, i, j)))
                 m[i][j].type = rand() % 5;
             
-            dx -= 30;
+            dx -= 35;
         }
-        dx = 25;
-        dy += 30;
+        dx = 35;
+        dy += 35;
     }
     return m;
 }
@@ -150,34 +151,115 @@ void matrix_draw(MATRIX** matrix)
         }
 }
 
-void hud_draw(int x, int y)
+void hud_draw(int x, int y, bool easteregg)
 {
+    int text_r = 20;
+    int text_g = 179;
+    int text_b = 20;
+    int score_r = 255;
+    int score_g = 255;
+    int score_b = 255;
+    int table_r = 219;
+    int table_g = 218;
+    int table_b = 222;
+    int shadow_r = 0;
+    int shadow_g = 0;
+    int shadow_b = 0;
 
-    al_draw_textf(font, al_map_rgb_f(1, 1, 1), 150, 50, 0, "%06ld", score_display); 
-    al_draw_filled_rectangle(DISP_W/2 - 30, 15, DISP_W/2 + 350, 365, al_map_rgb(0, 0, 0));
-    al_draw_filled_rectangle(DISP_W/2 - 40, 10, DISP_W/2 + 340, 355, al_map_rgb(219, 218, 222));
+    if(easteregg){
+        text_r = 255;
+        text_g = 159;
+        text_b = 48;
+        score_r = 23;
+        score_g = 23;
+        score_b = 23;
+        table_r = 23;
+        table_g = 23;
+        table_b = 23;
 
-    al_draw_text(font, al_map_rgb(20, 179, 20), 100, 10, 0, "< T E R M O I L >");
+    }
+
+    al_draw_textf(font, al_map_rgb(score_r, score_g, score_b), 150, 50, 0, "%06ld", score_display); 
+
+    al_draw_filled_rectangle(DISP_W/2 - 30, 15, DISP_W/2 + 350, 370, al_map_rgb(shadow_r, shadow_g, shadow_b));
+    al_draw_filled_rectangle(DISP_W/2 - 40, 10, DISP_W/2 + 340, 360, al_map_rgb(table_r, table_g, table_b));
+
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), 100, 10, 0, "< T E R M O I L >");
     
 }
 
-void help_draw()
+void help_draw(bool easteregg)
 {
-        al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 10, ALLEGRO_ALIGN_CENTRE, "< T E R M O I L >");
-        al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 30, ALLEGRO_ALIGN_CENTRE, "F1 ou H - menu de ajuda");
-        al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 50, ALLEGRO_ALIGN_CENTRE, "Como jogar:");
-        al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 70, ALLEGRO_ALIGN_CENTRE, "Clique em duas peças para troca-las de lugar");
-        al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 90, ALLEGRO_ALIGN_CENTRE, "Combine 3 ou mais peças do mesmo tipo para eliminá-las");
-        al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 110, ALLEGRO_ALIGN_CENTRE, "Quanto mais peças você eliminar de uma vez, mais pontos você ganha");
+    int text_r = 20;
+    int text_g = 179;
+    int text_b = 20;
 
+    if(easteregg){
+        text_r = 255;
+        text_g = 159;
+        text_b = 48;
+    }
+
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 10, ALLEGRO_ALIGN_CENTRE, "< T E R M O I L >");
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 30, ALLEGRO_ALIGN_CENTRE, "F1 ou H - menu de ajuda");
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 50, ALLEGRO_ALIGN_CENTRE, "Como jogar:");
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 70, ALLEGRO_ALIGN_CENTRE, "Clique em duas peças para troca-las de lugar");
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 90, ALLEGRO_ALIGN_CENTRE, "Combine 3 ou mais peças do mesmo tipo para eliminá-las");
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 110, ALLEGRO_ALIGN_CENTRE, "Quanto mais peças você eliminar de uma vez, mais pontos você ganha");
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 140, ALLEGRO_ALIGN_CENTRE, "<V>oltar");
 
 }
 
-void menu_draw()
+void menu_draw(bool easteregg)
 {
-    al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 50, ALLEGRO_ALIGN_CENTRE, "< T E R M O I L >");
-    al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 110, ALLEGRO_ALIGN_CENTRE, "Jogar");
-    al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 130, ALLEGRO_ALIGN_CENTRE, "Ajuda");
-    al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 150, ALLEGRO_ALIGN_CENTRE, "Ranking");
-    al_draw_text(font, al_map_rgb(20, 179, 20), DISP_W/4, 170, ALLEGRO_ALIGN_CENTRE, "Sair");
+    int text_r = 20;
+    int text_g = 179;
+    int text_b = 20;
+
+    if(easteregg){
+        text_r = 255;
+        text_g = 159;
+        text_b = 48;
+    }
+
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 50, ALLEGRO_ALIGN_CENTRE, "< T E R M O I L >");
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 110, ALLEGRO_ALIGN_CENTRE, "<J>ogar");
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 130, ALLEGRO_ALIGN_CENTRE, "<A>juda");
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 150, ALLEGRO_ALIGN_CENTRE, "<R>anking");
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 170, ALLEGRO_ALIGN_CENTRE, "<S>air");
+}
+
+void rank_draw(bool easteregg){
+    int text_r = 20;
+    int text_g = 179;
+    int text_b = 20;
+
+    if(easteregg){
+        text_r = 255;
+        text_g = 159;
+        text_b = 48;
+    }
+
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 50, ALLEGRO_ALIGN_CENTRE, "< T E R M O I L >");
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 110, ALLEGRO_ALIGN_CENTRE, "1 - 000000");
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 130, ALLEGRO_ALIGN_CENTRE, "2 - 000000");
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 150, ALLEGRO_ALIGN_CENTRE, "3 - 000000");
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 170, ALLEGRO_ALIGN_CENTRE, "<V>oltar");
+}
+
+void swap_jewels(MATRIX** matrix, int* pos1, int* pos2)
+{
+    int aux = matrix[pos1[0]][pos1[1]].type;
+    int aux_x = matrix[pos1[0]][pos1[1]].x;
+    int aux_y = matrix[pos1[0]][pos1[1]].y;
+
+    matrix[pos1[0]][pos1[1]].x = matrix[pos2[0]][pos2[1]].x;
+    matrix[pos1[0]][pos1[1]].y = matrix[pos2[0]][pos2[1]].y;
+    matrix[pos1[0]][pos1[1]].type = matrix[pos2[0]][pos2[1]].type;
+    matrix[pos2[0]][pos2[1]].type = aux;
+    matrix[pos2[0]][pos2[1]].x = aux_x;
+    matrix[pos2[0]][pos2[1]].y = aux_y;
+
+    printf("type1: %d, type2: %d\n", matrix[pos1[0]][pos1[1]].type, matrix[pos2[0]][pos2[1]].type);
+
 }

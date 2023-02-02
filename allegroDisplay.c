@@ -20,9 +20,21 @@ void disp_deinit()
     al_destroy_display(disp);
 }
 
-void disp_pre_draw()
+void disp_pre_draw(bool easteregg)
 {
+    int bg_r = 23;
+    int bg_g = 23;
+    int bg_b = 23;
+    
+    if(easteregg)
+    {
+        bg_r = 252;
+        bg_g = 250;
+        bg_b = 247;
+    }
 
+    al_set_target_bitmap(al_get_backbuffer(disp));
+    al_clear_to_color(al_map_rgb(bg_r, bg_g, bg_b));
 }
 
 void disp_post_draw()

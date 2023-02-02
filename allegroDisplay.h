@@ -15,9 +15,11 @@ void disp_init();
 void disp_deinit();
 
 // Limpa o buffer
-void disp_pre_draw();
+void disp_pre_draw(bool easteregg);
 
 // Desenha o buffer na tela
 void disp_post_draw();
+
+
 
 #endif

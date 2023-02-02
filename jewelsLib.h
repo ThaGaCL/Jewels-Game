@@ -21,6 +21,7 @@ typedef enum Jtype
     RED,
     YELLOW,
     PURPLE,
+    TYPE_NULL,
 } Jtype;
 
 typedef struct MATRIX
@@ -51,10 +52,14 @@ void hud_deinit();
 
 void hud_update();
 
-void hud_draw(int x, int y);
+void hud_draw(int x, int y, bool easteregg);
 
-void help_draw();
+void help_draw(bool easteregg);
 
-void menu_draw();
+void menu_draw(bool easteregg);
+
+void rank_draw(bool easteregg);
+
+void swap_jewels(MATRIX** matrix, int* pos1, int* pos2);
 
 #endif
