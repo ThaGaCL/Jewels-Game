@@ -142,8 +142,10 @@ int main(){
             mouse_on_jewel(matrix, pos2, pos_x, pos_y);
             printf("pos1: %d %d\n", pos1[0], pos1[1]);
             printf("pos2: %d %d\n", pos2[0], pos2[1]);
-            if((pos2[0] != -1))
+            
+            if((pos2[0] != -1)){
                 swap_jewels(matrix, pos1, pos2);
+            }
         }
         
 

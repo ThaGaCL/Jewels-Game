@@ -249,17 +249,13 @@ void rank_draw(bool easteregg){
 
 void swap_jewels(MATRIX** matrix, int* pos1, int* pos2)
 {
+    
     int aux = matrix[pos1[0]][pos1[1]].type;
     int aux_x = matrix[pos1[0]][pos1[1]].x;
     int aux_y = matrix[pos1[0]][pos1[1]].y;
 
-    matrix[pos1[0]][pos1[1]].x = matrix[pos2[0]][pos2[1]].x;
-    matrix[pos1[0]][pos1[1]].y = matrix[pos2[0]][pos2[1]].y;
     matrix[pos1[0]][pos1[1]].type = matrix[pos2[0]][pos2[1]].type;
     matrix[pos2[0]][pos2[1]].type = aux;
-    matrix[pos2[0]][pos2[1]].x = aux_x;
-    matrix[pos2[0]][pos2[1]].y = aux_y;
 
-    printf("type1: %d, type2: %d\n", matrix[pos1[0]][pos1[1]].type, matrix[pos2[0]][pos2[1]].type);
 
 }
