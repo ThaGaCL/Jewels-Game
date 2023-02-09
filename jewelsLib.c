@@ -207,7 +207,41 @@ void help_draw(bool easteregg)
     al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 90, ALLEGRO_ALIGN_CENTRE, "Combine 3 ou mais peças do mesmo tipo para eliminá-las");
     al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 110, ALLEGRO_ALIGN_CENTRE, "Quanto mais peças você eliminar de uma vez, mais pontos você ganha");
     al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 140, ALLEGRO_ALIGN_CENTRE, "<V>oltar");
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 200, ALLEGRO_ALIGN_CENTRE, "Criado por: Thales Carvalho");
+}
 
+int is_combo(MATRIX** m)
+{
+    // Verifica se há combinações na matriz
+    int i, j;
+    int combo = 0;
+
+    // Verifica linhas
+    for(i = 0; i < MATRIX_SIZE; i++){
+        for(j = 0; j < MATRIX_SIZE; j++){
+            if(m[i][j].type == m[i][j+1].type && m[i][j].type == m[i][j+2].type){
+                combo = 1;
+                m[i][j].select[0] = 1;
+                m[i][j+1].select[0] = 1;
+                m[i][j+2].select[0] = 1;
+            }
+        }
+    }
+
+    // // Verifica colunas
+    // for(i = 0; i < MATRIX_SIZE; i++){
+    //     for(j = 0; j < MATRIX_SIZE; j++){
+    //         if(m[j][i].type == m[j+1][i].type && m[j][i].type == m[j+2][i].type){
+    //             combo = 1;
+    //             m[j][i].select[0] = 1;
+    //             m[j+1][i].select[0] = 1;
+    //             m[j+2][i].select[0] = 1;
+    //         }
+    //     }
+    // }
+
+    return combo;
+    
 }
 
 void menu_draw(bool easteregg)
@@ -241,9 +275,9 @@ void rank_draw(bool easteregg){
     }
 
     al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 50, ALLEGRO_ALIGN_CENTRE, "< T E R M O I L >");
-    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 110, ALLEGRO_ALIGN_CENTRE, "1 - 000000");
-    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 130, ALLEGRO_ALIGN_CENTRE, "2 - 000000");
-    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 150, ALLEGRO_ALIGN_CENTRE, "3 - 000000");
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 110, ALLEGRO_ALIGN_CENTRE, "1 - Nome - 000000");
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 130, ALLEGRO_ALIGN_CENTRE, "2 - Nome - 000000");
+    al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 150, ALLEGRO_ALIGN_CENTRE, "3 - Nome - 000000");
     al_draw_text(font, al_map_rgb(text_r, text_g, text_b), DISP_W/2, 170, ALLEGRO_ALIGN_CENTRE, "<V>oltar");
 }
 
@@ -251,11 +285,76 @@ void swap_jewels(MATRIX** matrix, int* pos1, int* pos2)
 {
     
     int aux = matrix[pos1[0]][pos1[1]].type;
-    int aux_x = matrix[pos1[0]][pos1[1]].x;
-    int aux_y = matrix[pos1[0]][pos1[1]].y;
 
     matrix[pos1[0]][pos1[1]].type = matrix[pos2[0]][pos2[1]].type;
     matrix[pos2[0]][pos2[1]].type = aux;
 
 
+}
+
+void main_game_loop(MATRIX** matrix, int* pos1, int* pos2, int pos_x, int pos_y)
+{
+        if((matrix[pos1[0]][pos1[1]].select[0] == 0)){
+            mouse_on_jewel(matrix, pos1, pos_x, pos_y);
+        }
+
+        if((pos1[0] != -1)&&(matrix[pos1[0]][pos1[1]].select[0] != 0)){
+            
+            mouse_on_jewel(matrix, pos2, pos_x, pos_y);
+            
+            printf("pos1: %d %d\n", pos1[0], pos1[1]);
+            printf("pos2: %d %d\n", pos2[0], pos2[1]);
+            
+            if((pos2[0] != -1))
+            {
+
+                if(((pos1[0] == pos2[0])&&((pos1[1] == pos2[1]+1)))||((pos1[0] == pos2[0])&&(pos1[1] == pos2[1]-1))||((pos1[0] == pos2[0] + 1)&&((pos1[1] == pos2[1])))||((pos1[0] == pos2[0] - 1)&&(pos1[1] == pos2[1])))
+                {
+                    swap_jewels(matrix, pos1, pos2);
+                    matrix[pos2[0]][pos2[1]].select[0] = 0;
+                    matrix[pos1[0]][pos1[1]].select[0] = 0;
+                } 
+                
+                if(is_combo(matrix) == 1)
+                {
+                    printf("combo\n");
+                }
+                else
+                {
+                    printf("no combo\n");
+                }
+            }
+        }
+         
+}
+
+int mouse_on_jewel(MATRIX** m, int* pos, int x, int y)
+{
+    // Checa se o mouse esta em cima de algum jewel
+    int valid = 0;
+    for(int i = 0; i < MATRIX_SIZE && !valid; i++)
+    {
+        for(int j = 0; j < MATRIX_SIZE && !valid; j++)
+        {
+            if((x >= m[i][j].x) && (x <= m[i][j].x + 35) && (y >= m[i][j].y) && (y <= m[i][j].y + 35))
+            {
+                m[i][j].select[0] = 1;
+                pos[0] = i;
+                pos[1] = j;
+		valid = 1;
+            }
+            else
+            {
+                m[i][j].select[0] = 0;
+	    }      
+        }
+    } 
+    if (!valid)
+    {	     
+                pos[0] = -1;
+                pos[1] = -1;
+		return 0;
+    }
+    else
+      return 1;
 }

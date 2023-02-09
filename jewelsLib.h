@@ -6,6 +6,7 @@
 #include "allegroAudio.h"
 #include "allegroKeyboard.h"
 #include "allegroDisplay.h"
+#include "allegroMouse.h"
 
 #define MATRIX_SIZE 10
 
@@ -61,5 +62,12 @@ void menu_draw(bool easteregg);
 void rank_draw(bool easteregg);
 
 void swap_jewels(MATRIX** matrix, int* pos1, int* pos2);
+
+void main_game_loop(MATRIX** matrix, int* pos1, int* pos2, int pos_x, int pos_y);
+
+int mouse_on_jewel(MATRIX** m, int* pos, int x, int y);
+
+void matrix_swap(MATRIX** m, int i, int j);
+
 
 #endif
