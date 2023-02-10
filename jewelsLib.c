@@ -179,7 +179,7 @@ void hud_draw(int x, int y, bool easteregg)
 
     }
 
-    al_draw_textf(font, al_map_rgb(score_r, score_g, score_b), 150, 50, 0, "%06ld", score_display); 
+    al_draw_textf(font, al_map_rgb(score_r, score_g, score_b), 150, 50, 0, "%06ld", score); 
 
     al_draw_filled_rectangle(DISP_W/2 - 30, 15, DISP_W/2 + 350, 370, al_map_rgb(shadow_r, shadow_g, shadow_b));
     al_draw_filled_rectangle(DISP_W/2 - 40, 10, DISP_W/2 + 340, 360, al_map_rgb(table_r, table_g, table_b));
@@ -218,27 +218,32 @@ int is_combo(MATRIX** m)
 
     // Verifica linhas
     for(i = 0; i < MATRIX_SIZE; i++){
-        for(j = 0; j < MATRIX_SIZE; j++){
+        for(j = 0; j < MATRIX_SIZE - 2; j++){
             if(m[i][j].type == m[i][j+1].type && m[i][j].type == m[i][j+2].type){
                 combo = 1;
-                m[i][j].select[0] = 1;
-                m[i][j+1].select[0] = 1;
-                m[i][j+2].select[0] = 1;
+                if(combo > 0){
+                    m[i][j].type = 5;
+                    m[i][j+1].type = 5;
+                    m[i][j+2].type = 5;
+                }
             }
         }
     }
 
-    // // Verifica colunas
-    // for(i = 0; i < MATRIX_SIZE; i++){
-    //     for(j = 0; j < MATRIX_SIZE; j++){
-    //         if(m[j][i].type == m[j+1][i].type && m[j][i].type == m[j+2][i].type){
-    //             combo = 1;
-    //             m[j][i].select[0] = 1;
-    //             m[j+1][i].select[0] = 1;
-    //             m[j+2][i].select[0] = 1;
-    //         }
-    //     }
-    // }
+    // Verifica colunas
+    for(i = 0; i < MATRIX_SIZE; i++){
+        for(j = 0; j < MATRIX_SIZE - 2 ; j++){
+            if(m[j][i].type == m[j+1][i].type && m[j][i].type == m[j+2][i].type){
+                combo = 1;
+                if(combo > 0){
+                    m[j][i].type = 5;
+                    m[j+1][i].type = 5;
+                    m[j+2][i].type = 5;
+                }
+            }
+        }
+    }
+
 
     return combo;
     
@@ -294,11 +299,13 @@ void swap_jewels(MATRIX** matrix, int* pos1, int* pos2)
 
 void main_game_loop(MATRIX** matrix, int* pos1, int* pos2, int pos_x, int pos_y)
 {
-        if((matrix[pos1[0]][pos1[1]].select[0] == 0)){
+        if((matrix[pos1[0]][pos1[1]].select[0] == 0))
+        {
             mouse_on_jewel(matrix, pos1, pos_x, pos_y);
         }
 
-        if((pos1[0] != -1)&&(matrix[pos1[0]][pos1[1]].select[0] != 0)){
+        if((pos1[0] != -1)&&(matrix[pos1[0]][pos1[1]].select[0] != 0))
+        {
             
             mouse_on_jewel(matrix, pos2, pos_x, pos_y);
             
@@ -317,11 +324,7 @@ void main_game_loop(MATRIX** matrix, int* pos1, int* pos2, int pos_x, int pos_y)
                 
                 if(is_combo(matrix) == 1)
                 {
-                    printf("combo\n");
-                }
-                else
-                {
-                    printf("no combo\n");
+                    printf("COMBO\n");
                 }
             }
         }
