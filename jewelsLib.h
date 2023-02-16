@@ -69,5 +69,8 @@ int mouse_on_jewel(MATRIX** m, int* pos, int x, int y);
 
 void matrix_swap(MATRIX** m, int i, int j);
 
+void replace_jewels_row(MATRIX** m, int i, int j);
+
+int is_combo(MATRIX **m);
 
 #endif

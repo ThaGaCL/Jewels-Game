@@ -130,6 +130,7 @@ int main(){
 
         keyboard_update(&event);
 
+        is_combo(matrix);
         if(click){
             main_game_loop(matrix, pos1, pos2, pos_x, pos_y);
             click = false;
