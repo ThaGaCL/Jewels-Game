@@ -19,7 +19,8 @@ void sprites_init()
     mustInit(sprites.yellow, "spritesheet");
     sprites.purple = al_load_bitmap("assets/sprites/sdiferenciado.png");
     mustInit(sprites.purple, "spritesheet");
-
+    sprites.glitch = al_load_bitmap("assets/sprites/glitch.png");
+    mustInit(sprites.glitch, "spritesheet");
 }  
 
 // Libera o Bitmap dos sprites
@@ -31,6 +32,6 @@ void sprites_deinit()
     al_destroy_bitmap(sprites.red);
     al_destroy_bitmap(sprites.yellow);
     al_destroy_bitmap(sprites.purple);
-
+    al_destroy_bitmap(sprites.glitch);
 
 }

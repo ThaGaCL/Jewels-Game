@@ -2,7 +2,7 @@ PROGS = termoil
 CC = gcc
 CFLAGS = -Wall -g
 ALLEGRO = -lallegro -lallegro_primitives -lallegro_image -lallegro_font -lallegro_audio -lallegro_acodec
-objects = main.o jewelsLib.o allegroDisplay.o allegroUtil.o allegroKeyboard.o allegroSprites.o allegroAudio.o allegroMouse.o
+objects = main.o jewelsLib.o allegroDisplay.o allegroUtil.o allegroKeyboard.o allegroSprites.o allegroAudio.o allegroMouse.o libscore.o
 
 termoil: $(objects)
 	$(CC) $(CFLAGS) $(objects) $(ALLEGRO) -o $(PROGS)
@@ -31,6 +31,9 @@ allegroAudio.o: allegroAudio.c allegroAudio.h
 allegroUtil.o: allegroUtil.c allegroUtil.h
 	$(CC) $(CFLAGS) -c allegroUtil.c
 
+libscore.o: libscore.c libscore.h
+	$(CC) $(CFLAGS) -c libscore.c
+	
 clean:
 	-rm -f *~ *.o
 
