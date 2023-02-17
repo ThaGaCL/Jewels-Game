@@ -156,6 +156,8 @@ int main()
         if (easteregg)
         {
             printf("Segmentation fault (core dumped)\n");
+            printf("Ih mano talvez exploda hein\n");
+            printf("Vai com calma ai\n");
             score += 2000 * level;
         }
 
